@@ -51,6 +51,8 @@ public class Member extends BaseEntity {
 
     private Integer point;
 
+    private Integer age;
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<MemberAgree> memberAgreeList = new ArrayList<>();
 
