@@ -1,11 +1,12 @@
 package umc.study.springboot.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import umc.study.springboot.domain.common.BaseEntity;
+import umc.study.springboot.domain.mapping.MemberMission;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -21,4 +22,15 @@ public class Review extends BaseEntity {
     private String title;
 
     private Float score;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    private Store store;
+
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
+    private List<ReviewImage> reviewImageList = new ArrayList<>();
 }
