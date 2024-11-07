@@ -1,6 +1,5 @@
 package umc.study.springboot.domain.common;
 
-import jakarta.persistence.Cacheable;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
