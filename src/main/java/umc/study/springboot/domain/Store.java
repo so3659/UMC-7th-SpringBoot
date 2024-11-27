@@ -2,6 +2,7 @@ package umc.study.springboot.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import umc.study.springboot.domain.common.BaseEntity;
 
 import java.util.ArrayList;
@@ -24,14 +25,17 @@ public class Store extends BaseEntity {
     @Column(nullable = false, length = 50)
     private String address;
 
-    private Float score;
+    @ColumnDefault("0")
+    private Integer score;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id")
     private Region region;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
-    private List<Review> reviewList = new ArrayList<>();
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
 
     @Override
     public String toString() {

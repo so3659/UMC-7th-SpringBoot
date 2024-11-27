@@ -20,7 +20,4 @@ public class Region extends BaseEntity {
 
     @Column(nullable = false, length = 20)
     private String name;
-
-    @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
-    private List<Store> storeList = new ArrayList<>();
 }
