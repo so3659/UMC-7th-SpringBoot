@@ -27,9 +27,8 @@ public class StoreCommandServiceImpl implements StoreCommandService {
                 .orElseThrow(() -> new IllegalArgumentException("Region not found"));
 
         Store newStore = StoreConverter.toStore(request);
-        newStore.setRegion(region); // Region 설정
+        newStore.setRegion(region);
 
-        // 3. Store 저장
         return storeRepository.save(newStore);
     }
 }
