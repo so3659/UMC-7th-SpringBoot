@@ -7,8 +7,8 @@ import umc.study.springboot.domain.Review;
 import java.time.LocalDateTime;
 
 public class ReviewConverter {
-    public static ReviewResponseDTO.JoinResultDTO toJoinResultDTO(Review review) {
-        return ReviewResponseDTO.JoinResultDTO.builder()
+    public static ReviewResponseDTO.JoinReviewResultDTO toJoinResultDTO(Review review) {
+        return ReviewResponseDTO.JoinReviewResultDTO.builder()
                 .reviewId(review.getId())
                 .createdAt(LocalDateTime.now())
                 .build();
