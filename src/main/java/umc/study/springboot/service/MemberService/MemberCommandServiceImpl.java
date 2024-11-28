@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import umc.study.springboot.apiPayload.code.status.ErrorStatus;
-import umc.study.springboot.apiPayload.exception.handler.FoodCategoryHandler;
+import umc.study.springboot.apiPayload.exception.handler.ErrorHandler;
 import umc.study.springboot.converter.MemberConverter;
 import umc.study.springboot.converter.MemberPreferConverter;
 import umc.study.springboot.domain.FoodCategory;
@@ -32,7 +32,7 @@ public class MemberCommandServiceImpl implements MemberCommandService{
         Member newMember = MemberConverter.toMember(request);
         List<FoodCategory> foodCategoryList = request.getPreferCategory().stream()
                 .map(category -> {
-                    return foodCategoryRepository.findById(category).orElseThrow(() -> new FoodCategoryHandler(ErrorStatus.FOOD_CATEGORY_NOT_FOUND));
+                    return foodCategoryRepository.findById(category).orElseThrow(() -> new ErrorHandler(ErrorStatus.FOOD_CATEGORY_NOT_FOUND));
                 }).collect(Collectors.toList());
 
         List<MemberPrefer> memberPreferList = MemberPreferConverter.toMemberPreferList(foodCategoryList);
