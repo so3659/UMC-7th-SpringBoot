@@ -21,6 +21,12 @@ import umc.study.springboot.apiPayload.ApiResponse;
 import umc.study.springboot.domain.Mission;
 import umc.study.springboot.domain.Review;
 import umc.study.springboot.domain.Store;
+import umc.study.springboot.domain.mapping.MemberMission;
+import umc.study.springboot.missionChallenge.converter.ChallengeConverter;
+import umc.study.springboot.missionChallenge.dto.ChallengeRequestDTO;
+import umc.study.springboot.missionChallenge.dto.ChallengeResponseDTO;
+import umc.study.springboot.missionChallenge.service.ChallengeCommandService;
+import umc.study.springboot.validation.annotation.ExistMission;
 import umc.study.springboot.validation.annotation.ExistStore;
 
 @RestController
@@ -32,6 +38,7 @@ public class StoreRestController {
     private final StoreCommandService storeCommandService;
     private final ReviewCommandService reviewCommandService;
     private final MissionCommandService missionCommandService;
+    private final ChallengeCommandService challengeCommandService;
 
     @Operation(summary = "Store 추가", description = "새로운 Store를 추가합니다.")
     @PostMapping("")
@@ -52,5 +59,12 @@ public class StoreRestController {
     public ApiResponse<MissionResponseDTO.JoinMissionResultDTO> addMission(@RequestBody @Valid MissionRequestDTO.JoinMissionDTO request, @PathVariable @ExistStore Long id) {
         Mission misson = missionCommandService.joinMission(request, id);
         return ApiResponse.onSuccess(MissionConverter.toJoinResultDTO(misson));
+    }
+
+    @Operation(summary = "MissionChallenge 추가", description = "특정 User에 Mission를 추가합니다.")
+    @PostMapping("/{id}/missions/{missionId}/challenge")
+    public ApiResponse<ChallengeResponseDTO.JoinChallengeResultDTO> addChallenge(@RequestBody @Valid ChallengeRequestDTO.JoinChallengeDTO request, @PathVariable @ExistStore Long id, @PathVariable @ExistMission Long missionId) {
+        MemberMission challenge = challengeCommandService.joinChallenge(request, id, missionId);
+        return ApiResponse.onSuccess(ChallengeConverter.toJoinResultDTO(challenge));
     }
 }
