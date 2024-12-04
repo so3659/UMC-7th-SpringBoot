@@ -9,9 +9,11 @@ import umc.study.springboot.addStore.converter.StoreConverter;
 import umc.study.springboot.addStore.dto.StoreRequestDTO;
 import umc.study.springboot.apiPayload.code.status.ErrorStatus;
 import umc.study.springboot.apiPayload.exception.handler.ErrorHandler;
+import umc.study.springboot.domain.Mission;
 import umc.study.springboot.domain.Region;
 import umc.study.springboot.domain.Review;
 import umc.study.springboot.domain.Store;
+import umc.study.springboot.repository.MissionRepository;
 import umc.study.springboot.repository.RegionRepository;
 import umc.study.springboot.repository.StoreRepository.ReviewRepository;
 import umc.study.springboot.repository.StoreRepository.StoreRepository;
@@ -23,6 +25,7 @@ public class StoreCommandServiceImpl implements StoreCommandService {
     private final StoreRepository storeRepository;
     private final RegionRepository regionRepository;
     private final ReviewRepository reviewRepository;
+    private final MissionRepository missionRepository;
 
     @Override
     @Transactional
@@ -38,10 +41,18 @@ public class StoreCommandServiceImpl implements StoreCommandService {
     }
 
     @Override
-    public Page<Review> getReviewList(Long StoreId, Integer page) {
-        Store store = storeRepository.findById(StoreId).get();
+    public Page<Review> getReviewList(Long storeId, Integer page) {
+        Store store = storeRepository.findById(storeId).get();
 
-        Page<Review> StorePage = reviewRepository.findAllByStore(store, PageRequest.of(page, 10));
-        return StorePage;
+        Page<Review> storePage = reviewRepository.findAllByStore(store, PageRequest.of(page, 10));
+        return storePage;
+    }
+
+    @Override
+    public Page<Mission> getMissionList(Long storeId, Integer page){
+        Store store = storeRepository.findById(storeId).get();
+
+        Page<Mission> storePage = missionRepository.findAllByStore(store, PageRequest.of(page, 10));
+        return storePage;
     }
 }
