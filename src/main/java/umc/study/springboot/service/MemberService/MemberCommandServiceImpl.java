@@ -11,12 +11,14 @@ import umc.study.springboot.converter.MemberConverter;
 import umc.study.springboot.converter.MemberPreferConverter;
 import umc.study.springboot.domain.FoodCategory;
 import umc.study.springboot.domain.Member;
+import umc.study.springboot.domain.Mission;
 import umc.study.springboot.domain.Review;
 import umc.study.springboot.domain.mapping.MemberMission;
 import umc.study.springboot.domain.mapping.MemberPrefer;
 import umc.study.springboot.repository.FoodCategoryRepository;
 import umc.study.springboot.repository.MemberMissionRepository;
 import umc.study.springboot.repository.MemberRepository;
+import umc.study.springboot.repository.MissionRepository;
 import umc.study.springboot.repository.StoreRepository.ReviewRepository;
 import umc.study.springboot.web.dto.MemberRequestDTO;
 
@@ -28,7 +30,7 @@ import java.util.stream.Collectors;
 public class MemberCommandServiceImpl implements MemberCommandService{
 
     private final MemberRepository memberRepository;
-
+    private final MissionRepository missionRepository;
     private final FoodCategoryRepository foodCategoryRepository;
     private final ReviewRepository reviewRepository;
     private final MemberMissionRepository memberMissionRepository;
@@ -64,5 +66,14 @@ public class MemberCommandServiceImpl implements MemberCommandService{
 
         Page<MemberMission> missionPage=memberMissionRepository.findAllByMember(member, PageRequest.of(page, 10));
         return missionPage;
+    }
+
+    @Override
+    public MemberMission setMissionStatus(Long id, String status){
+        Mission mission = missionRepository.findById(id).get();
+
+        MemberMission changedMission=memberMissionRepository.findByMission(mission);
+        changedMission.setStatus(status);
+        return memberMissionRepository.save(changedMission);
     }
 }

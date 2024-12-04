@@ -12,4 +12,5 @@ public interface MemberCommandService {
 
     public Page<Review> getReviewList(Long id, Integer page);
     public Page<MemberMission> getMissionList(Long id, Integer page);
+    public MemberMission setMissionStatus(Long id, String status);
 }
