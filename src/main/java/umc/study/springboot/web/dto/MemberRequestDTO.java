@@ -2,20 +2,32 @@ package umc.study.springboot.web.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.Getter;
+import lombok.Setter;
+import umc.study.springboot.domain.enums.Role;
 import umc.study.springboot.validation.annotation.ExistCategories;
 
 import java.util.List;
 
+
 public class MemberRequestDTO {
 
     @Getter
+    @Setter
     public static class JoinDto {
         @NotBlank(message = "이름은 공백일 수 없습니다.") // 공백 허용 안 함
         String name;
 
-        @NotNull(message = "성별은 필수 입력 항목입니다.") // null 허용 안 함
-        @Min(value = 0, message = "성별 값은 0 이상이어야 합니다.")
-        @Max(value = 1, message = "성별 값은 1 이하이어야 합니다.") // 0 또는 1만 허용 (예: 남/여)
+        @NotBlank
+        @Email
+        String email;    // 이메일 필드 추가
+
+        @NotBlank
+        String password;    // 비밀번호 필드 추가
+
+        @NotNull
+        Role role;    // 역할 필드 추가
+
+        @NotNull
         Integer gender;
 
         @NotNull(message = "출생 연도는 필수 입력 항목입니다.")

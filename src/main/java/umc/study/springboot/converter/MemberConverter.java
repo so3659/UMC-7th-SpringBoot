@@ -26,17 +26,10 @@ public class MemberConverter {
     public static Member toMember(MemberRequestDTO.JoinDto request){
 
         Gender gender = null;
-
-        switch (request.getGender()){
-            case 1:
-                gender = Gender.MALE;
-                break;
-            case 2:
-                gender = Gender.FEMALE;
-                break;
-            case 3:
-                gender = Gender.NONE;
-                break;
+        switch (request.getGender()) {
+            case 1: gender = Gender.MALE; break;
+            case 2: gender = Gender.FEMALE; break;
+            case 3: gender = Gender.NONE; break;
         }
 
         return Member.builder()
@@ -44,6 +37,9 @@ public class MemberConverter {
                 .specAddress(request.getSpecAddress())
                 .gender(gender)
                 .name(request.getName())
+                .email(request.getEmail())
+                .role(request.getRole()) // 추가된 코드
+                .password(request.getPassword())
                 .age(request.getAge())
                 .memberPreferList(new ArrayList<>())
                 .build();

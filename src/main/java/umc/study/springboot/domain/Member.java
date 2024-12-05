@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import umc.study.springboot.domain.common.BaseEntity;
 import umc.study.springboot.domain.enums.Gender;
 import umc.study.springboot.domain.enums.MemberStatus;
+import umc.study.springboot.domain.enums.Role;
 import umc.study.springboot.domain.enums.SocialType;
 import umc.study.springboot.domain.mapping.MemberAgree;
 import umc.study.springboot.domain.mapping.MemberMission;
@@ -51,8 +52,18 @@ public class Member extends BaseEntity {
 
     private LocalDate inactiveDate;
 
-//    @Column(nullable = false, length = 50)
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    public void encodePassword(String password) {
+        this.password = password;
+    }
 
     @ColumnDefault("0")
     private Integer point;
